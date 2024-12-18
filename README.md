@@ -1,4 +1,6 @@
-## Hi there 👋
+
+<h1 align="center">Hi, I'm <a href="https://Kritshekhar.github.io/Me.io/" target="blank">
+Kritshekhar</a></h1>
 
 <!--
 **Kritshekhar/Kritshekhar** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
@@ -14,3 +16,4 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=Kritshekhar&label=Profile%20views&color=0e75b6&style=flat" alt="Kritshekhar" /> </p>
