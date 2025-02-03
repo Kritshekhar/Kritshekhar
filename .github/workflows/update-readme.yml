@@ -11,7 +11,9 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Debug Git Remote URL
         run: git remote -v
@@ -71,6 +73,7 @@ jobs:
           git config --global user.email "actions@github.com"
           git remote remove origin
           git remote add origin https://${GITHUB_USERNAME}:${PAT_TOKEN}@github.com/${{ github.repository }}.git
+          git fetch --unshallow
 
       - name: Force Git to Use HTTPS
         run: git config --global url."https://github.com/".insteadOf "git@github.com:"
