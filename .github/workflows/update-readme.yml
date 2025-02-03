@@ -17,29 +17,34 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.STARS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
-          ORGANIZATIONS: "visa-lab,CSE546-Cloud Computing, CSE330 Operating Systems" # Replace with your GitHub organizations, comma-separated
+          ORGANIZATIONS: "visa-lab,CSE546-Cloud-Computing,CSE330-Operating-Systems" # Replace with your actual organizations, comma-separated
 
         run: |
           echo "Fetching repositories for $USERNAME and organizations: $ORGANIZATIONS"
           
-          # Get personal repositories
+          # Fetch personal repositories
           USER_REPOS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-          "https://api.github.com/users/$USERNAME/repos?per_page=100" | jq '[.[] | {name: .name, stars: .stargazers_count}]')
+          "https://api.github.com/users/$USERNAME/repos?per_page=100" | jq -c 'if type=="array" then . else [] end')
 
-          # Get repositories from organizations
+          # Fetch organization repositories
           ORG_REPOS="[]"
           for ORG in $(echo $ORGANIZATIONS | tr "," "\n"); do
             REPOS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            "https://api.github.com/orgs/$ORG/repos?per_page=100" | jq '[.[] | {name: .name, stars: .stargazers_count}]')
+            "https://api.github.com/orgs/$ORG/repos?per_page=100" | jq -c 'if type=="array" then . else [] end')
+
             ORG_REPOS=$(echo $ORG_REPOS $REPOS | jq -s 'add')
           done
 
-          # Combine and calculate total stars
+          # Combine repositories
           ALL_REPOS=$(echo $USER_REPOS $ORG_REPOS | jq -s 'add')
-          TOTAL_STARS=$(echo $ALL_REPOS | jq '[.[] | .stars] | add')
 
-          # Format repositories with star counts
-          REPO_LIST=$(echo $ALL_REPOS | jq -r '.[] | "- [" + .name + "](https://github.com/'"$USERNAME"'/"+.name+") ⭐ " + (.stars | tostring)')
+          # Calculate total stars
+          TOTAL_STARS=$(echo $ALL_REPOS | jq '[.[] | .stargazers_count] | add')
+
+          # Format repository list correctly with owner username or org name
+          REPO_LIST=$(echo $ALL_REPOS | jq -r '.[] | 
+            "- [" + .name + "](https://github.com/" + 
+            (if .owner | has("login") then .owner.login else "'"$USERNAME"'" end) + "/" + .name + ") ⭐ " + (.stargazers_count | tostring)')
 
           # Update README.md
           sed -i "/<!-- STAR COUNT START -->/,/<!-- STAR COUNT END -->/c\
