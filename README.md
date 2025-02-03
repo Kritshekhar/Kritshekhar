@@ -19,13 +19,13 @@ Here are some ideas to get you started:
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=Kritshekhar&label=Profile%20views&color=0e75b6&style=flat" alt="Kritshekhar" /> </p>
 
 <!-- STAR COUNT START -->
-🌟 **Total Stars: 13**
+🌟 **Total Stars: 14**
 
 **Repositories:**
 - [asciidoc](https://github.com/Kritshekhar/asciidoc) ⭐ 0
 - [CSE330-OS](https://github.com/Kritshekhar/CSE330-OS) ⭐ 5
 - [dm-cache](https://github.com/Kritshekhar/dm-cache) ⭐ 0
-- [Kritshekhar](https://github.com/Kritshekhar/Kritshekhar) ⭐ 0
+- [Kritshekhar](https://github.com/Kritshekhar/Kritshekhar) ⭐ 1
 - [onos](https://github.com/Kritshekhar/onos) ⭐ 0
 - [Getting-Started](https://github.com/visa-lab/Getting-Started) ⭐ 1
 - [cluster-admin](https://github.com/visa-lab/cluster-admin) ⭐ 0
