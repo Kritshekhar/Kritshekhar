@@ -43,8 +43,9 @@ jobs:
           # Calculate total stars
           TOTAL_STARS=$(echo $ALL_REPOS | jq '[.[] | .stargazers_count] | add')
 
-          # Format repository list correctly
+          # Format repository list correctly (EXCLUDE 0-star repositories)
           REPO_LIST=$(echo $ALL_REPOS | jq -r '.[] | 
+            select(.stargazers_count > 0) | 
             "- [" + .name + "](https://github.com/" + 
             (if .owner | has("login") then .owner.login else "'"$USERNAME"'" end) + "/" + .name + ") ⭐ " + (.stargazers_count | tostring)')
 
