@@ -17,7 +17,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.STARS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
-          ORGANIZATIONS: "visa-lab,CSE546-Cloud-Computing,CSE330-Operating-Systems"  # Replace with your org names
+          ORGANIZATIONS: "visa-lab,CSE546-Cloud-Computing,CSE330-Operating-Systems"
 
         run: |
           echo "Fetching repositories for $USERNAME and organizations: $ORGANIZATIONS"
@@ -60,8 +60,11 @@ jobs:
           mv "$TEMP_FILE" README.md
 
       - name: Commit and push changes
+        env:
+          PAT_TOKEN: ${{ secrets.STARS_TOKEN }}
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
+          git remote set-url origin https://x-access-token:$PAT_TOKEN@github.com/${{ github.repository }}.git
           git commit -am "Updated total stars and repositories"
           git push
