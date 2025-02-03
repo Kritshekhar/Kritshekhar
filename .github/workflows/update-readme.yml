@@ -1,0 +1,57 @@
+name: Update README with Total Stars
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Runs every hour
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch Total Stars
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+          ORGANIZATIONS: "visa-lab,CSE546-Cloud Computing, CSE330 Operating Systems" # Replace with your GitHub organizations, comma-separated
+
+        run: |
+          echo "Fetching repositories for $USERNAME and organizations: $ORGANIZATIONS"
+          
+          # Get personal repositories
+          USER_REPOS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          "https://api.github.com/users/$USERNAME/repos?per_page=100" | jq '[.[] | {name: .name, stars: .stargazers_count}]')
+
+          # Get repositories from organizations
+          ORG_REPOS="[]"
+          for ORG in $(echo $ORGANIZATIONS | tr "," "\n"); do
+            REPOS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/orgs/$ORG/repos?per_page=100" | jq '[.[] | {name: .name, stars: .stargazers_count}]')
+            ORG_REPOS=$(echo $ORG_REPOS $REPOS | jq -s 'add')
+          done
+
+          # Combine and calculate total stars
+          ALL_REPOS=$(echo $USER_REPOS $ORG_REPOS | jq -s 'add')
+          TOTAL_STARS=$(echo $ALL_REPOS | jq '[.[] | .stars] | add')
+
+          # Format repositories with star counts
+          REPO_LIST=$(echo $ALL_REPOS | jq -r '.[] | "- [" + .name + "](https://github.com/'"$USERNAME"'/"+.name+") ⭐ " + (.stars | tostring)')
+
+          # Update README.md
+          sed -i "/<!-- STAR COUNT START -->/,/<!-- STAR COUNT END -->/c\
+          <!-- STAR COUNT START -->\n\
+          🌟 **Total Stars: $TOTAL_STARS**\n\
+          \n**Repositories:**\n\
+          $REPO_LIST\n\
+          <!-- STAR COUNT END -->" README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git commit -am "Updated total stars and repositories"
+          git push
