@@ -17,11 +17,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.STARS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
-          ORGANIZATIONS: "visa-lab,CSE546-Cloud-Computing,CSE330-Operating-Systems" # Replace with your actual organizations, comma-separated
+          ORGANIZATIONS: "visa-lab,CSE546-Cloud-Computing,CSE330-Operating-Systems"  # Replace with your org names
 
         run: |
           echo "Fetching repositories for $USERNAME and organizations: $ORGANIZATIONS"
-          
+
           # Fetch personal repositories
           USER_REPOS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
           "https://api.github.com/users/$USERNAME/repos?per_page=100" | jq -c 'if type=="array" then . else [] end')
@@ -41,18 +41,23 @@ jobs:
           # Calculate total stars
           TOTAL_STARS=$(echo $ALL_REPOS | jq '[.[] | .stargazers_count] | add')
 
-          # Format repository list correctly with owner username or org name
+          # Format repository list correctly
           REPO_LIST=$(echo $ALL_REPOS | jq -r '.[] | 
             "- [" + .name + "](https://github.com/" + 
             (if .owner | has("login") then .owner.login else "'"$USERNAME"'" end) + "/" + .name + ") ⭐ " + (.stargazers_count | tostring)')
 
-          # Update README.md
-          sed -i "/<!-- STAR COUNT START -->/,/<!-- STAR COUNT END -->/c\
-          <!-- STAR COUNT START -->\n\
-          🌟 **Total Stars: $TOTAL_STARS**\n\
-          \n**Repositories:**\n\
-          $REPO_LIST\n\
-          <!-- STAR COUNT END -->" README.md
+          # Create a temporary file
+          TEMP_FILE=$(mktemp)
+
+          # Use awk to update README safely
+          awk -v stars="$TOTAL_STARS" -v repos="$REPO_LIST" '
+              BEGIN { print_mode=1 }
+              /<!-- STAR COUNT START -->/ { print; print "🌟 **Total Stars: " stars "**\n\n**Repositories:**"; print repos; print_mode=0; next }
+              /<!-- STAR COUNT END -->/ { print_mode=1 }
+              print_mode' README.md > "$TEMP_FILE"
+
+          # Move the temp file back to README.md
+          mv "$TEMP_FILE" README.md
 
       - name: Commit and push changes
         run: |
