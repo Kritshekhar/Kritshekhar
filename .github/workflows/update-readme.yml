@@ -64,7 +64,7 @@ jobs:
 
       - name: Set Up Git Credentials
         env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PAT_TOKEN: ${{ secrets.STARS_TOKEN }}
           GITHUB_USERNAME: ${{ github.repository_owner }}
         run: |
           git config --global user.name "github-actions"
