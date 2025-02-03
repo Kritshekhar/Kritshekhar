@@ -15,7 +15,7 @@ jobs:
 
       - name: Fetch Total Stars
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.STARS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
           ORGANIZATIONS: "visa-lab,CSE546-Cloud Computing, CSE330 Operating Systems" # Replace with your GitHub organizations, comma-separated
 
