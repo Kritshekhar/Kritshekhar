@@ -62,9 +62,11 @@ jobs:
       - name: Commit and push changes
         env:
           PAT_TOKEN: ${{ secrets.STARS_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git remote set-url origin https://x-access-token:$PAT_TOKEN@github.com/${{ github.repository }}.git
+          git remote remove origin
+          git remote add origin https://${USERNAME}:${PAT_TOKEN}@github.com/${{ github.repository }}.git
           git commit -am "Updated total stars and repositories"
-          git push
+          git push origin main --force
