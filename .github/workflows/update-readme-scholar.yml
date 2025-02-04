@@ -15,46 +15,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install scholarly
+
       - name: Fetch Publications from Google Scholar
-        env:
-          SCHOLAR_QUERY: "Kritshekhar+Jha"
         run: |
-          echo "Fetching Google Scholar publications for $SCHOLAR_QUERY"
-
-          # Fetch Google Scholar results using SerpAPI
-          SCHOLAR_API_KEY=${{ secrets.STARS_TOKEN }}
-          API_URL="https://serpapi.com/search.json?engine=google_scholar&q=$SCHOLAR_QUERY&api_key=$SCHOLAR_API_KEY"
-
-          PUBLISH_LIST=$(curl -s "$API_URL")
-
-          # Debugging: Print raw API response
-          echo "Scholar API Response: $PUBLISH_LIST"
-
-          # Extract publication data safely
-          PUBLISH_LIST=$(echo "$PUBLISH_LIST" | jq -c 'if .organic_results then .organic_results else [] end')
-
-          # Check if results exist
-          if [[ "$PUBLISH_LIST" == "[]" ]]; then
-            echo "No publications found. Exiting."
-            exit 0
-          fi
-
-          # Format publication list correctly
-          PUB_LIST=$(echo "$PUBLISH_LIST" | jq -r '.[] | 
-            "- [" + .title + "](" + .link + ") 📄 " + .snippet')
-
-          # Create a temporary file
-          TEMP_FILE=$(mktemp)
-
-          # Use awk to update README safely
-          awk -v pubs="$PUB_LIST" '
-              BEGIN { print_mode=1 }
-              /<!-- PUBLICATION START -->/ { print; print "**Recent Publications:**"; print pubs; print_mode=0; next }
-              /<!-- PUBLICATION END -->/ { print_mode=1 }
-              print_mode' README.md > "$TEMP_FILE"
-
-          # Move the temp file back to README.md
-          mv "$TEMP_FILE" README.md
+          python fetch_publications.py
 
       - name: Commit and push changes
         env:
