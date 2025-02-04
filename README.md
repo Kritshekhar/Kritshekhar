@@ -25,7 +25,6 @@ Here are some ideas to get you started:
 - [User migration across multiple social media platforms](#) 📄 Citations: 14
 - [Generative Adversarial Network (GAN)-Based Autonomous Penetration Testing for Web Applications](#) 📄 Citations: 14
 - [Gpu-enabled function-as-a-service for machine learning inference](#) 📄 Citations: 11
-- [DAPT 2021-A Semi-Synthetic Dataset for Advanced Persistent Threats](#) 📄 Citations: 0
 
 <!-- PUBLICATION END -->
 
