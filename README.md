@@ -19,11 +19,10 @@ Here are some ideas to get you started:
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=Kritshekhar&label=Profile%20views&color=0e75b6&style=flat" alt="Kritshekhar" /> </p>
 
 <!-- STAR COUNT START -->
-🌟 **Total Stars: 14**
+🌟 **Total Stars: 13**
 
 **Repositories:**
 - [CSE330-OS](https://github.com/Kritshekhar/CSE330-OS) ⭐ 5
-- [Kritshekhar](https://github.com/Kritshekhar/Kritshekhar) ⭐ 1
 - [Getting-Started](https://github.com/visa-lab/Getting-Started) ⭐ 1
 - [CSE546-Cloud-Computing](https://github.com/visa-lab/CSE546-Cloud-Computing) ⭐ 1
 - [CSE330-OS](https://github.com/visa-lab/CSE330-OS) ⭐ 3
