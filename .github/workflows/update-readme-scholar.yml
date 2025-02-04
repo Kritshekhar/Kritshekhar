@@ -2,7 +2,7 @@ name: Update README with Google Scholar Publications
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour
+    - cron: '0 0 * * 0'  # Runs every Sunday at midnight UTC
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
