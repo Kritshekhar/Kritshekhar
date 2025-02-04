@@ -9,7 +9,7 @@ if author:
     publications = author.get("publications", [])
 
     pub_list = []
-    for pub in publications:  
+    for pub in publications[:-1]:  
         title = pub.get("bib", {}).get("title", "Unknown Title")
         link = pub.get("pub_url", "#")
         citation = pub.get("num_citations", 0)
