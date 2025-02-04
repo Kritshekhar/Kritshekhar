@@ -9,11 +9,11 @@ if author:
     publications = author.get("publications", [])
 
     pub_list = []
-    for pub in publications:  # Fetch 5 recent publications
+    for pub in publications:  
         title = pub.get("bib", {}).get("title", "Unknown Title")
         link = pub.get("pub_url", "#")
         citation = pub.get("num_citations", 0)
-        pub_list.append(f"- [{title}]({link}) 📄 Citations: {citation}")
+        pub_list.append(f"- [{title}]({link}) 📄 Citations: {citation}\n")
 
     print(pub_list)
     # Update README
@@ -28,7 +28,7 @@ if author:
     for line in readme_content:
         if start_marker in line:
             new_readme.append(line)
-            new_readme.append("**Recent Publications:**\n")
+            new_readme.append("**Publications:**\n")
             new_readme.extend(pub_list)
             inside_section = True
         elif end_marker in line:
