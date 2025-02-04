@@ -19,6 +19,8 @@ Here are some ideas to get you started:
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=Kritshekhar&label=Profile%20views&color=0e75b6&style=flat" alt="Kritshekhar" /> </p>
 
 <!-- PUBLICATION START -->
+**Recent Publications:**
+- [Problem-based cybersecurity lab with knowledge graph as guidance](#) 📄 Citations: 44- [Unraveled—A semi-synthetic dataset for Advanced Persistent Threats](#) 📄 Citations: 28- [User migration across multiple social media platforms](#) 📄 Citations: 14- [Generative Adversarial Network (GAN)-Based Autonomous Penetration Testing for Web Applications](#) 📄 Citations: 14- [Gpu-enabled function-as-a-service for machine learning inference](#) 📄 Citations: 11- [DAPT 2021-A Semi-Synthetic Dataset for Advanced Persistent Threats](#) 📄 Citations: 0
 <!-- PUBLICATION END -->
 
 
