@@ -21,14 +21,27 @@ jobs:
         run: |
           echo "Fetching Google Scholar publications for $SCHOLAR_QUERY"
 
-          # Fetch Google Scholar results using scholar.py (you need a Scholar API or scraper)
-          PUBLISH_LIST=$(curl -s "https://serpapi.com/search.json?engine=google_scholar&q=$SCHOLAR_QUERY&api_key=${{ secrets.SCHOLAR_API_KEY }}" | \
-            jq -r '[.organic_results[] | 
-            {title: .title, link: .link, citation: .snippet}]')
+          # Fetch Google Scholar results using SerpAPI
+          SCHOLAR_API_KEY=${{ secrets.SCHOLAR_API_KEY }}
+          API_URL="https://serpapi.com/search.json?engine=google_scholar&q=$SCHOLAR_QUERY&api_key=$SCHOLAR_API_KEY"
 
-          # Format the publication list correctly
-          PUB_LIST=$(echo $PUBLISH_LIST | jq -r '.[] | 
-            "- [" + .title + "](" + .link + ") 📄 " + .citation')
+          PUBLISH_LIST=$(curl -s "$API_URL")
+
+          # Debugging: Print raw API response
+          echo "Scholar API Response: $PUBLISH_LIST"
+
+          # Extract publication data safely
+          PUBLISH_LIST=$(echo "$PUBLISH_LIST" | jq -c 'if .organic_results then .organic_results else [] end')
+
+          # Check if results exist
+          if [[ "$PUBLISH_LIST" == "[]" ]]; then
+            echo "No publications found. Exiting."
+            exit 0
+          fi
+
+          # Format publication list correctly
+          PUB_LIST=$(echo "$PUBLISH_LIST" | jq -r '.[] | 
+            "- [" + .title + "](" + .link + ") 📄 " + .snippet')
 
           # Create a temporary file
           TEMP_FILE=$(mktemp)
@@ -45,7 +58,7 @@ jobs:
 
       - name: Commit and push changes
         env:
-          PAT_TOKEN: ${{ secrets.STARS_TOKEN }}
+          PAT_TOKEN: ${{ secrets.SCHOLAR_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
         run: |
           git config --global user.name "github-actions"
