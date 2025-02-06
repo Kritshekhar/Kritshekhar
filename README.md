@@ -29,10 +29,6 @@ Here are some ideas to get you started:
 <!-- PUBLICATION END -->
 
 
-<!-- STAR COUNT START -->
-🌟 **Total Stars: 25**
-<!-- STAR COUNT END -->
-
 <!-- GITHUB STATS START -->
 📊 **GitHub Statistics:**
 
