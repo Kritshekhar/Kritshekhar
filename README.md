@@ -35,14 +35,14 @@ Here are some ideas to get you started:
 
 <!-- LANGUAGES START -->
 🚀 **Most Used Languages:**
-- **PHP**: 66835079 bytes
-- **JavaScript**: 42475434 bytes
-- **Java**: 37399589 bytes
-- **CSS**: 10381119 bytes
-- **Python**: 4300445 bytes
-- **HTML**: 3047125 bytes
-- **C**: 2539335 bytes
-- **TypeScript**: 889859 bytes
-- **Shell**: 548616 bytes
-- **Starlark**: 493097 bytes
+- **PHP**: 39.00%
+- **JavaScript**: 24.00%
+- **Java**: 22.00%
+- **CSS**: 6.00%
+- **Python**: 2.00%
+- **HTML**: 1.00%
+- **C**: 1.00%
+- **TypeScript**: 0.00%
+- **Text**: 0.00%
+- **Starlark**: 0.00%
 <!-- LANGUAGES END -->
