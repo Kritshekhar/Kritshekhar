@@ -31,16 +31,4 @@ Here are some ideas to get you started:
 
 <!-- STAR COUNT START -->
 🌟 **Total Stars: 25**
-
-**Repositories:**
-- [CSE330-OS](https://github.com/Kritshekhar/CSE330-OS) ⭐ 5
-- [Getting-Started](https://github.com/visa-lab/Getting-Started) ⭐ 3
-- [.github](https://github.com/visa-lab/.github) ⭐ 2
-- [CSE330-Archives](https://github.com/visa-lab/CSE330-Archives) ⭐ 1
-- [CloudCache](https://github.com/visa-lab/CloudCache) ⭐ 1
-- [CSE546-Cloud-Computing](https://github.com/visa-lab/CSE546-Cloud-Computing) ⭐ 3
-- [CSE330-OS](https://github.com/visa-lab/CSE330-OS) ⭐ 5
-- [GTA-CSE546-SPRING-2025](https://github.com/CSE546-Cloud-Computing/GTA-CSE546-SPRING-2025) ⭐ 1
-- [Autograder-Spring-2025](https://github.com/CSE546-Cloud-Computing/Autograder-Spring-2025) ⭐ 1
-- [CSE546-SPRING-2025](https://github.com/CSE546-Cloud-Computing/CSE546-SPRING-2025) ⭐ 3
 <!-- STAR COUNT END -->
