@@ -32,3 +32,6 @@ Here are some ideas to get you started:
 <!-- STAR COUNT START -->
 🌟 **Total Stars: 25**
 <!-- STAR COUNT END -->
+
+<!-- LANGUAGES START -->
+<!-- LANGUAGES END -->
