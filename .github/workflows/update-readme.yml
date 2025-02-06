@@ -53,11 +53,18 @@ jobs:
           TEMP_FILE=$(mktemp)
 
           # Use awk to update README safely
-          awk -v stars="$TOTAL_STARS" -v repos="$REPO_LIST" '
+          #awk -v stars="$TOTAL_STARS" -v repos="$REPO_LIST" '
+          #    BEGIN { print_mode=1 }
+          #    /<!-- STAR COUNT START -->/ { print; print "🌟 **Total Stars: " stars "**\n\n**Repositories:**"; print repos; print_mode=0; next }
+          #    /<!-- STAR COUNT END -->/ { print_mode=1 }
+          #    print_mode' README.md > "$TEMP_FILE"
+
+          awk -v stars="$TOTAL_STARS" '
               BEGIN { print_mode=1 }
-              /<!-- STAR COUNT START -->/ { print; print "🌟 **Total Stars: " stars "**\n\n**Repositories:**"; print repos; print_mode=0; next }
+              /<!-- STAR COUNT START -->/ { print; print "🌟 **Total Stars: " stars "**"; print_mode=0; next }
               /<!-- STAR COUNT END -->/ { print_mode=1 }
               print_mode' README.md > "$TEMP_FILE"
+
 
           # Move the temp file back to README.md
           mv "$TEMP_FILE" README.md
