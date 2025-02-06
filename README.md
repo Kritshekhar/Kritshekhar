@@ -33,16 +33,4 @@ Here are some ideas to get you started:
 🌟 **Total Stars: 25**
 <!-- STAR COUNT END -->
 
-<!-- LANGUAGES START -->
-🚀 **Most Used Languages:**
-- **Java**: 76.00%
-- **JavaScript**: 8.00%
-- **HTML**: 5.00%
-- **Python**: 3.00%
-- **TypeScript**: 1.00%
-- **Starlark**: 1.00%
-- **C**: 1.00%
-- **Shell**: 0.00%
-- **SCSS**: 0.00%
-- **Roff**: 0.00%
-<!-- LANGUAGES END -->
+<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Kritshekhar&show_icons=true&locale=en&layout=compact" alt="Kritshekhar" /></p>
