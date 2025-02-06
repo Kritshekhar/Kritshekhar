@@ -33,4 +33,7 @@ Here are some ideas to get you started:
 🌟 **Total Stars: 25**
 <!-- STAR COUNT END -->
 
+<!-- GITHUB STATS START -->
+<!-- GITHUB STATS END -->
+
 <p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Kritshekhar&show_icons=true&locale=en&layout=compact" alt="Kritshekhar" /></p>
