@@ -97,8 +97,8 @@ jobs:
                   print "- ❗ **Total Open Issues (Across Repos):** " repo_issues;
                   print "- 📝 **Total Issues reported:** " issues;
                   print "- 🔄 **Total Pull Requests:** " prs;
-                  print "- 📆 **Total Commits (This Year):** " commits_this_year;
-                  print "- 📆 **Total Commits (Last Year):** " commits_last_year "\n";
+                  #print "- 📆 **Total Commits (This Year):** " commits_this_year;
+                  #print "- 📆 **Total Commits (Last Year):** " commits_last_year "\n";
                   #print "🚀 **Most Starred Repositories:**\n" top_repos;
                   print_mode=0;
                   next;
