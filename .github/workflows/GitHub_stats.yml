@@ -56,12 +56,24 @@ jobs:
           TOTAL_PRS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
           "https://api.github.com/search/issues?q=author:$USERNAME+type:pr" | jq '.total_count')
 
-          # Fetch commit counts for this year and last year
-          TOTAL_COMMITS_THIS_YEAR=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-          "https://api.github.com/search/commits?q=author:$USERNAME+committer-date:${CURRENT_YEAR}" | jq '.total_count')
+          # Fetch commit counts using GraphQL API
+          GRAPHQL_QUERY='{
+            "query": "query {
+              user(login: \"'$USERNAME'\") {
+                contributionsCollection(from: \"'$CURRENT_YEAR'-01-01T00:00:00Z\", to: \"'$CURRENT_YEAR'-12-31T23:59:59Z\") {
+                  totalCommitContributions
+                }
+                lastYear: contributionsCollection(from: \"'$LAST_YEAR'-01-01T00:00:00Z\", to: \"'$LAST_YEAR'-12-31T23:59:59Z\") {
+                  totalCommitContributions
+                }
+              }
+            }"
+          }'
 
-          TOTAL_COMMITS_LAST_YEAR=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-          "https://api.github.com/search/commits?q=author:$USERNAME+committer-date:${LAST_YEAR}" | jq '.total_count')
+          RESPONSE=$(curl -s -H "Authorization: bearer $GITHUB_TOKEN" -X POST -d "$GRAPHQL_QUERY" https://api.github.com/graphql)
+
+          TOTAL_COMMITS_THIS_YEAR=$(echo $RESPONSE | jq '.data.user.contributionsCollection.totalCommitContributions')
+          TOTAL_COMMITS_LAST_YEAR=$(echo $RESPONSE | jq '.data.user.lastYear.totalCommitContributions')
 
           # Get most starred repositories (Top 5)
           MOST_STARRED=$(echo $ALL_REPOS | jq -r '
@@ -83,11 +95,11 @@ jobs:
                   print "- 🍴 **Total Forks:** " forks;
                   print "- 👀 **Total Watchers:** " watchers;
                   print "- ❗ **Total Open Issues (Across Repos):** " repo_issues;
-                  print "- 📝 **Total Issues Created:** " issues;
+                  print "- 📝 **Total Issues reported:** " issues;
                   print "- 🔄 **Total Pull Requests:** " prs;
                   print "- 📆 **Total Commits (This Year):** " commits_this_year;
                   print "- 📆 **Total Commits (Last Year):** " commits_last_year "\n";
-                  print "🚀 **Most Starred Repositories:**\n" top_repos;
+                  #print "🚀 **Most Starred Repositories:**\n" top_repos;
                   print_mode=0;
                   next;
               }
