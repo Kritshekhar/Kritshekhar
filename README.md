@@ -35,14 +35,14 @@ Here are some ideas to get you started:
 
 <!-- LANGUAGES START -->
 🚀 **Most Used Languages:**
-- **Java**: 74.00%
+- **Java**: 76.00%
 - **JavaScript**: 8.00%
-- **Python**: 5.00%
 - **HTML**: 5.00%
+- **Python**: 3.00%
 - **TypeScript**: 1.00%
+- **Starlark**: 1.00%
 - **C**: 1.00%
-- **Text**: 0.00%
-- **Starlark**: 0.00%
 - **Shell**: 0.00%
 - **SCSS**: 0.00%
+- **Roff**: 0.00%
 <!-- LANGUAGES END -->
