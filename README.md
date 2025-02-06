@@ -34,4 +34,15 @@ Here are some ideas to get you started:
 <!-- STAR COUNT END -->
 
 <!-- LANGUAGES START -->
+🚀 **Most Used Languages:**
+- **PHP**: 66835079 bytes
+- **JavaScript**: 42475434 bytes
+- **Java**: 37399589 bytes
+- **CSS**: 10381119 bytes
+- **Python**: 4300445 bytes
+- **HTML**: 3047125 bytes
+- **C**: 2539335 bytes
+- **TypeScript**: 889859 bytes
+- **Shell**: 548616 bytes
+- **Starlark**: 493097 bytes
 <!-- LANGUAGES END -->
