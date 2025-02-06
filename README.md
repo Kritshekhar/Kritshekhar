@@ -40,17 +40,11 @@ Here are some ideas to get you started:
 - 🍴 **Total Forks:** 16
 - 👀 **Total Watchers:** 25
 - ❗ **Total Open Issues (Across Repos):** 4
-- 📝 **Total Issues Created:** 7
+- 📝 **Total Issues reported:** 7
 - 🔄 **Total Pull Requests:** 1
-- 📆 **Total Commits (This Year):** 
-- 📆 **Total Commits (Last Year):** 
+- 📆 **Total Commits (This Year):** null
+- 📆 **Total Commits (Last Year):** null
 
-🚀 **Most Starred Repositories:**
-- [CSE330-OS](https://github.com/Kritshekhar/CSE330-OS) ⭐ 5
-- [CSE330-OS](https://github.com/visa-lab/CSE330-OS) ⭐ 5
-- [Getting-Started](https://github.com/visa-lab/Getting-Started) ⭐ 3
-- [CSE546-Cloud-Computing](https://github.com/visa-lab/CSE546-Cloud-Computing) ⭐ 3
-- [CSE546-SPRING-2025](https://github.com/CSE546-Cloud-Computing/CSE546-SPRING-2025) ⭐ 3
 <!-- GITHUB STATS END -->
 
 <p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Kritshekhar&show_icons=true&locale=en&layout=compact" alt="Kritshekhar" /></p>
