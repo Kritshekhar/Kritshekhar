@@ -1,0 +1,110 @@
+name: Update README with GitHub Stats
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Runs every hour
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch GitHub Stats
+        env:
+          GITHUB_TOKEN: ${{ secrets.STARS_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+          ORGANIZATIONS: "visa-lab,CSE546-Cloud-Computing,CSE330-Operating-Systems"
+          CURRENT_YEAR: $(date +%Y)
+          LAST_YEAR: $(date --date="last year" +%Y)
+
+        run: |
+          echo "Fetching repositories for $USERNAME and organizations: $ORGANIZATIONS"
+
+          # Fetch personal repositories (including private)
+          USER_REPOS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          "https://api.github.com/users/$USERNAME/repos?per_page=100&type=all" | jq -c 'if type=="array" then . else [] end')
+
+          # Fetch organization repositories
+          ORG_REPOS="[]"
+          for ORG in $(echo $ORGANIZATIONS | tr "," "\n"); do
+            REPOS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/orgs/$ORG/repos?per_page=100&type=all" | jq -c 'if type=="array" then . else [] end')
+
+            ORG_REPOS=$(echo $ORG_REPOS $REPOS | jq -s 'add')
+          done
+
+          # Combine repositories
+          ALL_REPOS=$(echo $USER_REPOS $ORG_REPOS | jq -s 'add')
+
+          # Calculate GitHub stats
+          TOTAL_STARS=$(echo $ALL_REPOS | jq '[.[] | .stargazers_count] | add')
+          TOTAL_FORKS=$(echo $ALL_REPOS | jq '[.[] | .forks_count] | add')
+          TOTAL_WATCHERS=$(echo $ALL_REPOS | jq '[.[] | .watchers_count] | add')
+          TOTAL_REPO_ISSUES=$(echo $ALL_REPOS | jq '[.[] | .open_issues_count] | add')
+
+          # Fetch total issues created by the user
+          TOTAL_ISSUES=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          "https://api.github.com/search/issues?q=author:$USERNAME+type:issue" | jq '.total_count')
+
+          # Fetch total pull requests created by the user
+          TOTAL_PRS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          "https://api.github.com/search/issues?q=author:$USERNAME+type:pr" | jq '.total_count')
+
+          # Fetch commit counts for this year and last year
+          TOTAL_COMMITS_THIS_YEAR=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          "https://api.github.com/search/commits?q=author:$USERNAME+committer-date:${CURRENT_YEAR}" | jq '.total_count')
+
+          TOTAL_COMMITS_LAST_YEAR=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          "https://api.github.com/search/commits?q=author:$USERNAME+committer-date:${LAST_YEAR}" | jq '.total_count')
+
+          # Get most starred repositories (Top 5)
+          MOST_STARRED=$(echo $ALL_REPOS | jq -r '
+            map(select(.stargazers_count > 0)) | 
+            sort_by(-.stargazers_count) | 
+            .[:5] | 
+            map("- [" + .name + "](https://github.com/" + .owner.login + "/" + .name + ") ⭐ " + (.stargazers_count | tostring)) | join("\n")')
+
+          # Create a temporary file for updating README
+          TEMP_FILE=$(mktemp)
+
+          # Use awk to safely update README
+          awk -v stars="$TOTAL_STARS" -v forks="$TOTAL_FORKS" -v watchers="$TOTAL_WATCHERS" -v repo_issues="$TOTAL_REPO_ISSUES" -v issues="$TOTAL_ISSUES" -v prs="$TOTAL_PRS" -v commits_this_year="$TOTAL_COMMITS_THIS_YEAR" -v commits_last_year="$TOTAL_COMMITS_LAST_YEAR" -v top_repos="$MOST_STARRED" '
+              BEGIN { print_mode=1 }
+              /<!-- GITHUB STATS START -->/ { 
+                  print;
+                  print "📊 **GitHub Statistics:**\n";
+                  print "- 🌟 **Total Stars:** " stars;
+                  print "- 🍴 **Total Forks:** " forks;
+                  print "- 👀 **Total Watchers:** " watchers;
+                  print "- ❗ **Total Open Issues (Across Repos):** " repo_issues;
+                  print "- 📝 **Total Issues Created:** " issues;
+                  print "- 🔄 **Total Pull Requests:** " prs;
+                  print "- 📆 **Total Commits (This Year):** " commits_this_year;
+                  print "- 📆 **Total Commits (Last Year):** " commits_last_year "\n";
+                  print "🚀 **Most Starred Repositories:**\n" top_repos;
+                  print_mode=0;
+                  next;
+              }
+              /<!-- GITHUB STATS END -->/ { print_mode=1 }
+              print_mode' README.md > "$TEMP_FILE"
+
+          # Move the updated file back
+          mv "$TEMP_FILE" README.md
+
+      - name: Commit and push changes
+        env:
+          PAT_TOKEN: ${{ secrets.STARS_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git remote remove origin
+          git remote add origin https://${USERNAME}:${PAT_TOKEN}@github.com/${{ github.repository }}.git
+          git commit -am "Updated GitHub stats" || echo "No changes to commit"
+          git push origin main --force
