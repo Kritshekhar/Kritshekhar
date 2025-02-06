@@ -42,6 +42,8 @@ jobs:
 
           # Fetch and count programming languages
           declare -A LANG_COUNTS
+          TOTAL_BYTES=0
+
           for REPO in $(echo $ALL_REPOS | jq -r '.[].full_name'); do
             LANGS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
             "https://api.github.com/repos/$REPO/languages")
@@ -49,13 +51,15 @@ jobs:
             for LANG in $(echo $LANGS | jq -r 'keys[]'); do
               COUNT=$(echo $LANGS | jq -r --arg LANG "$LANG" '.[$LANG]')
               LANG_COUNTS[$LANG]=$(( ${LANG_COUNTS[$LANG]:-0} + COUNT ))
+              TOTAL_BYTES=$(( TOTAL_BYTES + COUNT ))
             done
           done
 
-          # Sort languages by usage
+          # Generate percentage-based ranking
           TOP_LANGS=$(for LANG in "${!LANG_COUNTS[@]}"; do
-            echo "${LANG_COUNTS[$LANG]} $LANG"
-          done | sort -rn | awk '{print "- **" $2 "**: " $1 " bytes"}' | head -10)
+            PERCENTAGE=$(echo "scale=2; (${LANG_COUNTS[$LANG]} / $TOTAL_BYTES) * 100" | bc)
+            echo "$PERCENTAGE $LANG"
+          done | sort -rn | awk '{printf "- **%s**: %.2f%%\n", $2, $1}' | head -10)
 
           # Create a temporary file for updating README
           TEMP_FILE=$(mktemp)
@@ -79,5 +83,5 @@ jobs:
           git config --global user.email "actions@github.com"
           git remote remove origin
           git remote add origin https://${USERNAME}:${PAT_TOKEN}@github.com/${{ github.repository }}.git
-          git commit -am "Updated most used programming languages" || echo "No changes to commit"
+          git commit -am "Updated most used programming languages (percentage)" || echo "No changes to commit"
           git push origin main --force
