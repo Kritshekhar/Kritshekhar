@@ -38,9 +38,6 @@ Here are some ideas to get you started:
 - ❗ **Total Open Issues (Across Repos):** 4
 - 📝 **Total Issues reported:** 7
 - 🔄 **Total Pull Requests:** 1
-- 📆 **Total Commits (This Year):** null
-- 📆 **Total Commits (Last Year):** null
-
 <!-- GITHUB STATS END -->
 
 <p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Kritshekhar&show_icons=true&locale=en&layout=compact" alt="Kritshekhar" /></p>
