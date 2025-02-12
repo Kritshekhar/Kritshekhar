@@ -21,7 +21,7 @@ Here are some ideas to get you started:
 <!-- PUBLICATION START -->
 **Publications:**
 - [Problem-based cybersecurity lab with knowledge graph as guidance](#) 📄 Citations: 44
-- [Unraveled—A semi-synthetic dataset for Advanced Persistent Threats](#) 📄 Citations: 28
+- [Unraveled—A semi-synthetic dataset for Advanced Persistent Threats](#) 📄 Citations: 29
 - [User migration across multiple social media platforms](#) 📄 Citations: 14
 - [Generative Adversarial Network (GAN)-Based Autonomous Penetration Testing for Web Applications](#) 📄 Citations: 14
 - [Gpu-enabled function-as-a-service for machine learning inference](#) 📄 Citations: 11
