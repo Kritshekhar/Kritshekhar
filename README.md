@@ -33,7 +33,7 @@ Here are some ideas to get you started:
 📊 **GitHub Statistics:**
 
 - 🌟 **Total Stars:** 30
-- 🍴 **Total Forks:** 16
+- 🍴 **Total Forks:** 17
 - 👀 **Total Watchers:** 30
 - ❗ **Total Open Issues (Across Repos):** 4
 - 📝 **Total Issues reported:** 7
