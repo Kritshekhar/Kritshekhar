@@ -28,6 +28,8 @@ Here are some ideas to get you started:
 
 <!-- PUBLICATION END -->
 
+<!--START_SECTION:waka-->
+<!--END_SECTION:waka-->
 
 <!-- GITHUB STATS START -->
 📊 **GitHub Statistics:**
