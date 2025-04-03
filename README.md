@@ -30,9 +30,13 @@ Here are some ideas to get you started:
 
 <!--START_SECTION:waka-->
 
-```txt
-Python   2 hrs 23 mins   ███████████████████████▒░   93.03 %
-Other    10 mins         █▓░░░░░░░░░░░░░░░░░░░░░░░   06.97 %
+```rust
+From: 26 March 2025 - To: 03 April 2025
+
+Total Time: 2 hrs 23 mins
+
+Python   2 hrs 23 mins   >>>>>>>>>>>>>>>>>>>>>>>--   93.03 %
+Other    10 mins         >>-----------------------   06.97 %
 ```
 
 <!--END_SECTION:waka-->
