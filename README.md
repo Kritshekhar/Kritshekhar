@@ -33,13 +33,13 @@ Here are some ideas to get you started:
 <!--START_SECTION:waka-->
 
 ```rust
-From: 26 March 2025 - To: 05 May 2025
+From: 26 March 2025 - To: 06 May 2025
 
-Total Time: 27 hrs 25 mins
+Total Time: 29 hrs 8 mins
 
-Python   22 hrs 49 mins  >>>>>>>>>>>>>>>>>>>>-----   80.30 %
-Bash     2 hrs 37 mins   >>-----------------------   09.25 %
-Other    1 hr            >------------------------   03.55 %
+Python   22 hrs 49 mins  >>>>>>>>>>>>>>>>>>>------   75.74 %
+Bash     4 hrs 20 mins   >>>>---------------------   14.40 %
+Other    1 hr            >------------------------   03.35 %
 ```
 
 <!--END_SECTION:waka-->
