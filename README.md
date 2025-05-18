@@ -51,7 +51,7 @@ Other      1 hr 1 min      >------------------------   03.18 %
 📊 **GitHub Statistics:**
 
 - 🌟 **Total Stars:** 50
-- 🍴 **Total Forks:** 22
+- 🍴 **Total Forks:** 21
 - 👀 **Total Watchers:** 50
 - ❗ **Total Open Issues (Across Repos):** 4
 - 📝 **Total Issues reported:** 7
