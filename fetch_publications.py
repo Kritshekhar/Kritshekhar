@@ -28,7 +28,8 @@ if author:
     for line in readme_content:
         if start_marker in line:
             new_readme.append(line)
-            new_readme.append("**Publications:**\n")
+            #new_readme.append("**Publications:**\n")
+            new_readme.append('<h2>Publications:</h2>')
             new_readme.extend(pub_list)
             inside_section = True
         elif end_marker in line:
