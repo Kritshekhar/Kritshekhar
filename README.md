@@ -48,7 +48,7 @@ Other      1 hr 1 min      >------------------------   03.14 %
 
 
 <!-- GITHUB STATS START -->
-<h2>📊 GitHub Repository Stats</h2>
+<h2>📊 GitHub Statistics</h2>
 <table>
   <tr><td>🌟 <strong>Total Stars</strong></td><td>54</td></tr>
   <tr><td>🍴 <strong>Total Forks</strong></td><td>21</td></tr>
