@@ -90,7 +90,7 @@ jobs:
               BEGIN { print_mode=1 }
               /<!-- GITHUB STATS START -->/ {
                   print;
-                  print "<h2>📊 GitHub Repository Stats</h2>";
+                  print "<h2>📊 GitHub Statistics</h2>";
                   print "<table>";
                   print "  <tr><td>🌟 <strong>Total Stars</strong></td><td>" stars "</td></tr>";
                   print "  <tr><td>🍴 <strong>Total Forks</strong></td><td>" forks "</td></tr>";
