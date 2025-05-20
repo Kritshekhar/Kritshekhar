@@ -139,10 +139,16 @@ jobs:
         env:
           PAT_TOKEN: ${{ secrets.STARS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
+          
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git remote remove origin
           git remote add origin https://${USERNAME}:${PAT_TOKEN}@github.com/${{ github.repository }}.git
-          git commit -am "Updated GitHub stats" || echo "No changes to commit"
+           
+          # Only add README.md (avoid workflow files)
+          git add README.md
+          # Commit if there are changes
+          git diff --cached --quiet || git commit -m "Updated GitHub stats"
           git push origin main --force
+
