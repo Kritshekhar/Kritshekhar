@@ -48,14 +48,17 @@ Other      1 hr 1 min      >------------------------   03.14 %
 
 
 <!-- GITHUB STATS START -->
-📊 **GitHub Statistics:**
+<h2>📊 GitHub Repository Stats</h2>
+<table>
+  <tr><td>🌟 <strong>Total Stars</strong></td><td>54</td></tr>
+  <tr><td>🍴 <strong>Total Forks</strong></td><td>21</td></tr>
+  <tr><td>👀 <strong>Total Watchers</strong></td><td>54</td></tr>
+  <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>4</td></tr>
+  <tr><td>📝 <strong>Issues Reported</strong></td><td>7</td></tr>
+  <tr><td>🔄 <strong>Pull Requests</strong></td><td>1</td></tr>
+</table>
 
-- 🌟 **Total Stars:** 54
-- 🍴 **Total Forks:** 21
-- 👀 **Total Watchers:** 54
-- ❗ **Total Open Issues (Across Repos):** 4
-- 📝 **Total Issues reported:** 7
-- 🔄 **Total Pull Requests:** 1
+<hr/>
 <!-- GITHUB STATS END -->
 
 <p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Kritshekhar&show_icons=true&locale=en&layout=compact" alt="Kritshekhar" /></p>
