@@ -88,23 +88,49 @@ jobs:
           # Use awk to safely update README
           awk -v stars="$TOTAL_STARS" -v forks="$TOTAL_FORKS" -v watchers="$TOTAL_WATCHERS" -v repo_issues="$TOTAL_REPO_ISSUES" -v issues="$TOTAL_ISSUES" -v prs="$TOTAL_PRS" -v commits_this_year="$TOTAL_COMMITS_THIS_YEAR" -v commits_last_year="$TOTAL_COMMITS_LAST_YEAR" -v top_repos="$MOST_STARRED" '
               BEGIN { print_mode=1 }
-              /<!-- GITHUB STATS START -->/ { 
+              /<!-- GITHUB STATS START -->/ {
                   print;
-                  print "📊 **GitHub Statistics:**\n";
-                  print "- 🌟 **Total Stars:** " stars;
-                  print "- 🍴 **Total Forks:** " forks;
-                  print "- 👀 **Total Watchers:** " watchers;
-                  print "- ❗ **Total Open Issues (Across Repos):** " repo_issues;
-                  print "- 📝 **Total Issues reported:** " issues;
-                  print "- 🔄 **Total Pull Requests:** " prs;
-                  #print "- 📆 **Total Commits (This Year):** " commits_this_year;
-                  #print "- 📆 **Total Commits (Last Year):** " commits_last_year "\n";
-                  #print "🚀 **Most Starred Repositories:**\n" top_repos;
+                  print "<h2>📊 GitHub Repository Stats</h2>";
+                  print "<table>";
+                  print "  <tr><td>🌟 <strong>Total Stars</strong></td><td>" stars "</td></tr>";
+                  print "  <tr><td>🍴 <strong>Total Forks</strong></td><td>" forks "</td></tr>";
+                  print "  <tr><td>👀 <strong>Total Watchers</strong></td><td>" watchers "</td></tr>";
+                  print "  <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>" repo_issues "</td></tr>";
+                  print "  <tr><td>📝 <strong>Issues Reported</strong></td><td>" issues "</td></tr>";
+                  print "  <tr><td>🔄 <strong>Pull Requests</strong></td><td>" prs "</td></tr>";
+                  # print "  <tr><td>📆 <strong>Commits (This Year)</strong></td><td>" commits_this_year "</td></tr>";
+                  # print "  <tr><td>📆 <strong>Commits (Last Year)</strong></td><td>" commits_last_year "</td></tr>";
+                  print "</table>";
+                  print "";
+                  # print "<h3>🚀 Most Starred Repositories</h3>";
+                  # print "<ul>";
+                  # split(top_repos, repos, "\n");
+                  # for (i in repos) print "  <li>" repos[i] "</li>";
+                  # print "</ul>";
+                  print "<hr/>";
                   print_mode=0;
                   next;
-              }
-              /<!-- GITHUB STATS END -->/ { print_mode=1 }
-              print_mode' README.md > "$TEMP_FILE"
+            }
+            /<!-- GITHUB STATS END -->/ { print_mode=1 }
+            print_mode' README.md > "$TEMP_FILE"
+              
+            #/<!-- GITHUB STATS START -->/ { 
+            #      print;
+            #      print "📊 **GitHub Statistics:**\n";
+            #      print "- 🌟 **Total Stars:** " stars;
+            #      print "- 🍴 **Total Forks:** " forks;
+            #      print "- 👀 **Total Watchers:** " watchers;
+            #      print "- ❗ **Total Open Issues (Across Repos):** " repo_issues;
+            #      print "- 📝 **Total Issues reported:** " issues;
+            #      print "- 🔄 **Total Pull Requests:** " prs;
+            #      #print "- 📆 **Total Commits (This Year):** " commits_this_year;
+            #      #print "- 📆 **Total Commits (Last Year):** " commits_last_year "\n";
+            #      #print "🚀 **Most Starred Repositories:**\n" top_repos;
+            #      print_mode=0;
+            #      next;
+            #  }
+            #  /<!-- GITHUB STATS END -->/ { print_mode=1 }
+            #  print_mode' README.md > "$TEMP_FILE"
 
           # Move the updated file back
           mv "$TEMP_FILE" README.md
