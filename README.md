@@ -60,7 +60,7 @@ JSON       4 mins          -------------------------   00.21 %
   <tr><td>🍴 <strong>Total Forks</strong></td><td>21</td></tr>
   <tr><td>👀 <strong>Total Watchers</strong></td><td>57</td></tr>
   <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>4</td></tr>
-  <tr><td>📝 <strong>Issues Reported</strong></td><td>7</td></tr>
+  <tr><td>📝 <strong>Issues Reported</strong></td><td>8</td></tr>
   <tr><td>🔄 <strong>Pull Requests</strong></td><td>1</td></tr>
 </table>
 
