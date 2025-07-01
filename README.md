@@ -61,7 +61,7 @@ Docker        19 mins         -------------------------   00.32 %
   <tr><td>👀 <strong>Total Watchers</strong></td><td>59</td></tr>
   <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>4</td></tr>
   <tr><td>📝 <strong>Issues Reported</strong></td><td>8</td></tr>
-  <tr><td>🔄 <strong>Pull Requests</strong></td><td>1</td></tr>
+  <tr><td>🔄 <strong>Pull Requests</strong></td><td>2</td></tr>
 </table>
 
 <hr/>
