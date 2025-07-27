@@ -24,7 +24,7 @@ Here are some ideas to get you started:
 - [Unraveled—A semi-synthetic dataset for Advanced Persistent Threats](#) 📄 Citations: 47
 - [User migration across multiple social media platforms](#) 📄 Citations: 29
 - [Generative adversarial network (gan)-based autonomous penetration testing for web applications](#) 📄 Citations: 21
-- [Gpu-enabled function-as-a-service for machine learning inference](#) 📄 Citations: 15
+- [Gpu-enabled function-as-a-service for machine learning inference](#) 📄 Citations: 16
 
 <!-- PUBLICATION END -->
 
