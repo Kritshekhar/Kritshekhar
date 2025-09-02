@@ -19,7 +19,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.STARS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
-          ORGANIZATIONS: "visa-lab,CSE546-Cloud-Computing,CSE330-Operating-Systems"
+          ORGANIZATIONS: "visa-lab,CSE546-Cloud-Computing,CSE330-Operating-Systems,CSE330-OS"
           CURRENT_YEAR: $(date +%Y)
           LAST_YEAR: $(date --date="last year" +%Y)
 
