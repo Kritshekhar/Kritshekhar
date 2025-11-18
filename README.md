@@ -57,9 +57,9 @@ Todotxt       24 mins         -------------------------   00.12 %
 <!-- GITHUB STATS START -->
 <h2>📊 GitHub Statistics</h2>
 <table>
-  <tr><td>🌟 <strong>Total Stars</strong></td><td>81</td></tr>
+  <tr><td>🌟 <strong>Total Stars</strong></td><td>80</td></tr>
   <tr><td>🍴 <strong>Total Forks</strong></td><td>25</td></tr>
-  <tr><td>👀 <strong>Total Watchers</strong></td><td>81</td></tr>
+  <tr><td>👀 <strong>Total Watchers</strong></td><td>80</td></tr>
   <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>4</td></tr>
   <tr><td>📝 <strong>Issues Reported</strong></td><td>16</td></tr>
   <tr><td>🔄 <strong>Pull Requests</strong></td><td>2</td></tr>
