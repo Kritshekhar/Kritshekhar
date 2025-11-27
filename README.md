@@ -34,20 +34,20 @@ Here are some ideas to get you started:
 <!--START_SECTION:waka-->
 
 ```rust
-From: 26 March 2025 - To: 24 November 2025
+From: 26 March 2025 - To: 25 November 2025
 
-Total Time: 342 hrs 9 mins
+Total Time: 348 hrs 39 mins
 
-Python        179 hrs 17 mins >>>>>>>>>>>>>------------   51.13 %
-Bash          71 hrs 46 mins  >>>>>--------------------   20.47 %
-C++           49 hrs 21 mins  >>>>---------------------   14.07 %
-C             28 hrs 27 mins  >>-----------------------   08.12 %
-Other         8 hrs 32 mins   >------------------------   02.43 %
-Markdown      3 hrs 53 mins   -------------------------   01.11 %
-CSV           3 hrs 52 mins   -------------------------   01.11 %
-Makefile      2 hrs 4 mins    -------------------------   00.59 %
-Text          1 hr 50 mins    -------------------------   00.53 %
-Todotxt       24 mins         -------------------------   00.12 %
+Python        180 hrs 56 mins >>>>>>>>>>>>>------------   50.66 %
+Bash          74 hrs 5 mins   >>>>>--------------------   20.74 %
+C++           49 hrs 21 mins  >>>----------------------   13.82 %
+C             30 hrs 57 mins  >>-----------------------   08.66 %
+Other         8 hrs 32 mins   >------------------------   02.39 %
+Markdown      3 hrs 53 mins   -------------------------   01.09 %
+CSV           3 hrs 52 mins   -------------------------   01.09 %
+Makefile      2 hrs 4 mins    -------------------------   00.58 %
+Text          1 hr 50 mins    -------------------------   00.52 %
+Todotxt       24 mins         -------------------------   00.11 %
 ```
 
 <!--END_SECTION:waka-->
