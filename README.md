@@ -20,10 +20,10 @@ Here are some ideas to get you started:
 
 <!-- PUBLICATION START -->
 **Publications:**
-- [Unraveled—A semi-synthetic dataset for Advanced Persistent Threats](#) 📄 Citations: 66
+- [Unraveled—A semi-synthetic dataset for Advanced Persistent Threats](#) 📄 Citations: 69
 - [Problem-based cybersecurity lab with knowledge graph as guidance](#) 📄 Citations: 54
-- [User migration across multiple social media platforms](#) 📄 Citations: 39
-- [Generative adversarial network (gan)-based autonomous penetration testing for web applications](#) 📄 Citations: 35
+- [User migration across multiple social media platforms](#) 📄 Citations: 40
+- [Generative adversarial network (gan)-based autonomous penetration testing for web applications](#) 📄 Citations: 37
 - [Gpu-enabled function-as-a-service for machine learning inference](#) 📄 Citations: 21
 - [Improving Cybersecurity: The role of ai in identifying and preventing threats](#) 📄 Citations: 1
 
