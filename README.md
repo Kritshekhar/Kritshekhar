@@ -70,7 +70,7 @@ CMake         6 mins          -------------------------   00.02 %
   <tr><td>🌟 <strong>Total Stars</strong></td><td>85</td></tr>
   <tr><td>🍴 <strong>Total Forks</strong></td><td>25</td></tr>
   <tr><td>👀 <strong>Total Watchers</strong></td><td>85</td></tr>
-  <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>4</td></tr>
+  <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>5</td></tr>
   <tr><td>📝 <strong>Issues Reported</strong></td><td>17</td></tr>
   <tr><td>🔄 <strong>Pull Requests</strong></td><td>9</td></tr>
 </table>
