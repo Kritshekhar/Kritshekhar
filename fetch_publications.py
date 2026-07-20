@@ -9,9 +9,16 @@ if author:
     publications = author.get("publications", [])
 
     pub_list = []
-    for pub in publications[:-1]:  
+    for pub in publications:
         title = pub.get("bib", {}).get("title", "Unknown Title")
-        link = pub.get("pub_url", "#")
+        pub_id = pub.get("author_pub_id", "")
+        if pub_id:
+            link = (
+                "https://scholar.google.com/citations?view_op=view_citation"
+                f"&hl=en&user={scholar_id}&citation_for_view={pub_id}"
+            )
+        else:
+            link = "#"
         citation = pub.get("num_citations", 0)
         pub_list.append(f"- [{title}]({link}) 📄 Citations: {citation}\n")
 
