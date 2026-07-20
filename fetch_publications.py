@@ -1,53 +1,80 @@
-from scholarly import scholarly
+import sys
+
+from scholarly import scholarly, ProxyGenerator
 
 scholar_id = "sPRgURoAAAAJ"  # Replace with the correct Scholar ID
 print(f"Fetching Google Scholar publications for ID: {scholar_id}")
 
-author = scholarly.search_author_id(scholar_id)
-if author:
-    scholarly.fill(author, sections=["publications"])
-    publications = author.get("publications", [])
+# Google Scholar blocks datacenter IPs (like GitHub Actions runners), which
+# makes a direct request hang on a CAPTCHA. Route through free proxies as a
+# best-effort workaround so the job fails fast instead of hanging for hours.
+try:
+    pg = ProxyGenerator()
+    if pg.FreeProxies():
+        scholarly.use_proxy(pg)
+        print("Using free proxy for Google Scholar requests.")
+    else:
+        print("No working proxy found; trying a direct connection.")
+except Exception as exc:  # pragma: no cover - proxy setup is best-effort
+    print(f"Proxy setup failed ({exc}); trying a direct connection.")
 
-    pub_list = []
-    for pub in publications:
-        title = pub.get("bib", {}).get("title", "Unknown Title")
-        pub_id = pub.get("author_pub_id", "")
-        if pub_id:
-            link = (
-                "https://scholar.google.com/citations?view_op=view_citation"
-                f"&hl=en&user={scholar_id}&citation_for_view={pub_id}"
-            )
-        else:
-            link = "#"
-        citation = pub.get("num_citations", 0)
-        pub_list.append(f"- [{title}]({link}) 📄 Citations: {citation}\n")
+try:
+    author = scholarly.search_author_id(scholar_id)
+except Exception as exc:
+    print(f"Failed to fetch author from Google Scholar: {exc}")
+    print("Leaving README.md unchanged.")
+    sys.exit(0)
 
-    print(pub_list)
-    # Update README
-    with open("README.md", "r", encoding="utf-8") as file:
-        readme_content = file.readlines()
-
-    start_marker = "<!-- PUBLICATION START -->"
-    end_marker = "<!-- PUBLICATION END -->"
-    
-    new_readme = []
-    inside_section = False
-    for line in readme_content:
-        if start_marker in line:
-            new_readme.append(line)
-            new_readme.append("**Publications:**\n")
-            #new_readme.append('<h2>Publications:</h2>')
-            new_readme.extend(pub_list)
-            inside_section = True
-        elif end_marker in line:
-            inside_section = False
-            new_readme.append("\n" + line)
-        elif not inside_section:
-            new_readme.append(line)
-
-    with open("README.md", "w", encoding="utf-8") as file:
-        file.writelines(new_readme)
-
-    print("README updated successfully.")
-else:
+if not author:
     print("No author found. Check the Scholar ID.")
+    print("Leaving README.md unchanged.")
+    sys.exit(0)
+
+scholarly.fill(author, sections=["publications"])
+publications = author.get("publications", [])
+
+if not publications:
+    print("No publications returned; leaving README.md unchanged.")
+    sys.exit(0)
+
+pub_list = []
+for pub in publications:
+    title = pub.get("bib", {}).get("title", "Unknown Title")
+    pub_id = pub.get("author_pub_id", "")
+    if pub_id:
+        link = (
+            "https://scholar.google.com/citations?view_op=view_citation"
+            f"&hl=en&user={scholar_id}&citation_for_view={pub_id}"
+        )
+    else:
+        link = "#"
+    citation = pub.get("num_citations", 0)
+    pub_list.append(f"- [{title}]({link}) 📄 Citations: {citation}\n")
+
+print(pub_list)
+# Update README
+with open("README.md", "r", encoding="utf-8") as file:
+    readme_content = file.readlines()
+
+start_marker = "<!-- PUBLICATION START -->"
+end_marker = "<!-- PUBLICATION END -->"
+
+new_readme = []
+inside_section = False
+for line in readme_content:
+    if start_marker in line:
+        new_readme.append(line)
+        new_readme.append("**Publications:**\n")
+        #new_readme.append('<h2>Publications:</h2>')
+        new_readme.extend(pub_list)
+        inside_section = True
+    elif end_marker in line:
+        inside_section = False
+        new_readme.append("\n" + line)
+    elif not inside_section:
+        new_readme.append(line)
+
+with open("README.md", "w", encoding="utf-8") as file:
+    file.writelines(new_readme)
+
+print("README updated successfully.")
