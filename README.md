@@ -20,12 +20,13 @@ Here are some ideas to get you started:
 
 <!-- PUBLICATION START -->
 **Publications:**
-- [Unraveled—A semi-synthetic dataset for Advanced Persistent Threats](#) 📄 Citations: 90
-- [Problem-based cybersecurity lab with knowledge graph as guidance](#) 📄 Citations: 64
-- [User migration across multiple social media platforms](#) 📄 Citations: 54
-- [Generative adversarial network (GAN)-based autonomous penetration testing for web applications](#) 📄 Citations: 49
-- [Gpu-enabled function-as-a-service for machine learning inference](#) 📄 Citations: 23
-- [Improving Cybersecurity: The role of ai in identifying and preventing threats](#) 📄 Citations: 1
+- [Unraveled—A semi-synthetic dataset for Advanced Persistent Threats](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:u5HHmVD_uO8C) 📄 Citations: 92
+- [Problem-based cybersecurity lab with knowledge graph as guidance](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:9yKSN-GCB0IC) 📄 Citations: 66
+- [User migration across multiple social media platforms](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:d1gkVwhDpl0C) 📄 Citations: 54
+- [Generative adversarial network (GAN)-based autonomous penetration testing for web applications](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:qjMakFHDy7sC) 📄 Citations: 49
+- [Gpu-enabled function-as-a-service for machine learning inference](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:2osOgNQ5qMEC) 📄 Citations: 23
+- [Improving Cybersecurity: The role of ai in identifying and preventing threats](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:UeHWp8X0CEIC) 📄 Citations: 1
+- [DAPT 2021-A Semi-Synthetic Dataset for Advanced Persistent Threats](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:u-x6o8ySG0sC) 📄 Citations: 0
 
 <!-- PUBLICATION END -->
 
