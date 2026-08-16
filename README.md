@@ -20,10 +20,10 @@ Here are some ideas to get you started:
 
 <!-- PUBLICATION START -->
 **Publications:**
-- [Unraveled—A semi-synthetic dataset for Advanced Persistent Threats](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:u5HHmVD_uO8C) 📄 Citations: 90
+- [Unraveled—A semi-synthetic dataset for Advanced Persistent Threats](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:u5HHmVD_uO8C) 📄 Citations: 91
 - [Problem-based cybersecurity lab with knowledge graph as guidance](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:9yKSN-GCB0IC) 📄 Citations: 62
-- [User migration across multiple social media platforms](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:d1gkVwhDpl0C) 📄 Citations: 51
-- [Generative adversarial network (GAN)-based autonomous penetration testing for web applications](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:qjMakFHDy7sC) 📄 Citations: 49
+- [User migration across multiple social media platforms](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:d1gkVwhDpl0C) 📄 Citations: 53
+- [Generative adversarial network (GAN)-based autonomous penetration testing for web applications](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:qjMakFHDy7sC) 📄 Citations: 50
 - [Gpu-enabled function-as-a-service for machine learning inference](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:2osOgNQ5qMEC) 📄 Citations: 22
 - [Improving Cybersecurity: The role of ai in identifying and preventing threats](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:UeHWp8X0CEIC) 📄 Citations: 0
 - [DAPT 2021-A Semi-Synthetic Dataset for Advanced Persistent Threats](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPRgURoAAAAJ&citation_for_view=sPRgURoAAAAJ:u-x6o8ySG0sC) 📄 Citations: 0
