@@ -13,80 +13,91 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Fetch GitHub Stats
         env:
           GITHUB_TOKEN: ${{ secrets.STARS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
-          ORGANIZATIONS: "visa-lab,CSE546-Cloud-Computing,CSE330-Operating-Systems,CSE330-OS"
-          CURRENT_YEAR: $(date +%Y)
-          LAST_YEAR: $(date --date="last year" +%Y)
-
+          ORGANIZATIONS: "visa-lab,CSE546-Cloud-Computing,CSE330-OS"
         run: |
+          # Handle errors ourselves so a transient API hiccup never crashes the
+          # job or leaves README.md half-written.
+          set +e
+          set -o pipefail
+
+          API="https://api.github.com"
+          # Strip any stray whitespace/newline from the secret — a trailing
+          # newline makes the Authorization header malformed and silently
+          # downgrades every request to unauthenticated (60/hr shared limit).
+          TOKEN=$(printf '%s' "$GITHUB_TOKEN" | tr -d '[:space:]')
+          AUTH="Authorization: token ${TOKEN}"
+
+          # --- Diagnostics: are we actually authenticated? ---
+          RL=$(curl -s -H "$AUTH" "$API/rate_limit")
+          CORE_LIMIT=$(echo "$RL" | jq -r '.resources.core.limit // "unknown"' 2>/dev/null)
+          CORE_REMAINING=$(echo "$RL" | jq -r '.resources.core.remaining // "unknown"' 2>/dev/null)
+          echo "Core rate limit: ${CORE_REMAINING} / ${CORE_LIMIT}  (5000 => authenticated, 60 => NOT authenticated)"
+
+          if [ "$CORE_LIMIT" = "60" ]; then
+            echo "::warning::Requests are UNAUTHENTICATED. STARS_TOKEN is missing/invalid. Leaving README unchanged."
+            exit 0
+          fi
+          if [ "$CORE_REMAINING" != "unknown" ] && [ "$CORE_REMAINING" -lt 10 ] 2>/dev/null; then
+            echo "::warning::Core rate limit nearly exhausted (${CORE_REMAINING} left). Leaving README unchanged."
+            exit 0
+          fi
+
+          # GET an endpoint; echo the body only if it is a JSON array, else "[]".
+          fetch_array() {
+            local body
+            body=$(curl -s -H "$AUTH" "$1")
+            if echo "$body" | jq -e 'type=="array"' >/dev/null 2>&1; then
+              echo "$body"
+            else
+              echo "::warning::Non-array response from $1 -> $(echo "$body" | head -c 200)" >&2
+              echo "[]"
+            fi
+          }
+
           echo "Fetching repositories for $USERNAME and organizations: $ORGANIZATIONS"
 
-          # Fetch personal repositories (including private)
-          USER_REPOS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-          "https://api.github.com/users/$USERNAME/repos?per_page=100&type=all" | jq -c 'if type=="array" then . else [] end')
+          USER_REPOS=$(fetch_array "$API/users/$USERNAME/repos?per_page=100&type=all")
 
-          # Fetch organization repositories
           ORG_REPOS="[]"
-          for ORG in $(echo $ORGANIZATIONS | tr "," "\n"); do
-            REPOS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            "https://api.github.com/orgs/$ORG/repos?per_page=100&type=all" | jq -c 'if type=="array" then . else [] end')
-
-            ORG_REPOS=$(echo $ORG_REPOS $REPOS | jq -s 'add')
+          for ORG in $(echo "$ORGANIZATIONS" | tr "," "\n"); do
+            REPOS=$(fetch_array "$API/orgs/$ORG/repos?per_page=100&type=all")
+            ORG_REPOS=$(echo "$ORG_REPOS" "$REPOS" | jq -s 'add')
           done
 
-          # Combine repositories
-          ALL_REPOS=$(echo $USER_REPOS $ORG_REPOS | jq -s 'add')
+          ALL_REPOS=$(echo "$USER_REPOS" "$ORG_REPOS" | jq -s 'add')
 
-          # Calculate GitHub stats
-          TOTAL_STARS=$(echo $ALL_REPOS | jq '[.[] | .stargazers_count] | add')
-          TOTAL_FORKS=$(echo $ALL_REPOS | jq '[.[] | .forks_count] | add')
-          TOTAL_WATCHERS=$(echo $ALL_REPOS | jq '[.[] | .watchers_count] | add')
-          TOTAL_REPO_ISSUES=$(echo $ALL_REPOS | jq '[.[] | .open_issues_count] | add')
+          # If we got nothing at all, don't overwrite the existing stats with zeros.
+          if [ "$(echo "$ALL_REPOS" | jq 'length')" = "0" ]; then
+            echo "::warning::No repositories returned; leaving README unchanged."
+            exit 0
+          fi
 
-          # Fetch total issues created by the user
-          TOTAL_ISSUES=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-          "https://api.github.com/search/issues?q=author:$USERNAME+type:issue" | jq '.total_count')
+          TOTAL_STARS=$(echo "$ALL_REPOS" | jq '[.[] | .stargazers_count] | add // 0')
+          TOTAL_FORKS=$(echo "$ALL_REPOS" | jq '[.[] | .forks_count] | add // 0')
+          TOTAL_WATCHERS=$(echo "$ALL_REPOS" | jq '[.[] | .watchers_count] | add // 0')
+          TOTAL_REPO_ISSUES=$(echo "$ALL_REPOS" | jq '[.[] | .open_issues_count] | add // 0')
 
-          # Fetch total pull requests created by the user
-          TOTAL_PRS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-          "https://api.github.com/search/issues?q=author:$USERNAME+type:pr" | jq '.total_count')
+          ISSUES_JSON=$(curl -s -H "$AUTH" "$API/search/issues?q=author:$USERNAME+type:issue")
+          TOTAL_ISSUES=$(echo "$ISSUES_JSON" | jq -r '.total_count // 0' 2>/dev/null)
+          case "$TOTAL_ISSUES" in ''|*[!0-9]*) TOTAL_ISSUES=0 ;; esac
 
-          # Fetch commit counts using GraphQL API
-          GRAPHQL_QUERY='{
-            "query": "query {
-              user(login: \"'$USERNAME'\") {
-                contributionsCollection(from: \"'$CURRENT_YEAR'-01-01T00:00:00Z\", to: \"'$CURRENT_YEAR'-12-31T23:59:59Z\") {
-                  totalCommitContributions
-                }
-                lastYear: contributionsCollection(from: \"'$LAST_YEAR'-01-01T00:00:00Z\", to: \"'$LAST_YEAR'-12-31T23:59:59Z\") {
-                  totalCommitContributions
-                }
-              }
-            }"
-          }'
+          PRS_JSON=$(curl -s -H "$AUTH" "$API/search/issues?q=author:$USERNAME+type:pr")
+          TOTAL_PRS=$(echo "$PRS_JSON" | jq -r '.total_count // 0' 2>/dev/null)
+          case "$TOTAL_PRS" in ''|*[!0-9]*) TOTAL_PRS=0 ;; esac
 
-          RESPONSE=$(curl -s -H "Authorization: bearer $GITHUB_TOKEN" -X POST -d "$GRAPHQL_QUERY" https://api.github.com/graphql)
-
-          TOTAL_COMMITS_THIS_YEAR=$(echo $RESPONSE | jq '.data.user.contributionsCollection.totalCommitContributions')
-          TOTAL_COMMITS_LAST_YEAR=$(echo $RESPONSE | jq '.data.user.lastYear.totalCommitContributions')
-
-          # Get most starred repositories (Top 5)
-          MOST_STARRED=$(echo $ALL_REPOS | jq -r '
-            map(select(.stargazers_count > 0)) | 
-            sort_by(-.stargazers_count) | 
-            .[:5] | 
-            map("- [" + .name + "](https://github.com/" + .owner.login + "/" + .name + ") ⭐ " + (.stargazers_count | tostring)) | join("\n")')
+          echo "Stars=$TOTAL_STARS Forks=$TOTAL_FORKS Watchers=$TOTAL_WATCHERS RepoIssues=$TOTAL_REPO_ISSUES Issues=$TOTAL_ISSUES PRs=$TOTAL_PRS"
 
           # Create a temporary file for updating README
           TEMP_FILE=$(mktemp)
 
-          # Use awk to safely update README
-          awk -v stars="$TOTAL_STARS" -v forks="$TOTAL_FORKS" -v watchers="$TOTAL_WATCHERS" -v repo_issues="$TOTAL_REPO_ISSUES" -v issues="$TOTAL_ISSUES" -v prs="$TOTAL_PRS" -v commits_this_year="$TOTAL_COMMITS_THIS_YEAR" -v commits_last_year="$TOTAL_COMMITS_LAST_YEAR" -v top_repos="$MOST_STARRED" '
+          # Use awk to safely update the stats block
+          awk -v stars="$TOTAL_STARS" -v forks="$TOTAL_FORKS" -v watchers="$TOTAL_WATCHERS" -v repo_issues="$TOTAL_REPO_ISSUES" -v issues="$TOTAL_ISSUES" -v prs="$TOTAL_PRS" '
               BEGIN { print_mode=1 }
               /<!-- GITHUB STATS START -->/ {
                   print;
@@ -98,39 +109,14 @@ jobs:
                   print "  <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>" repo_issues "</td></tr>";
                   print "  <tr><td>📝 <strong>Issues Reported</strong></td><td>" issues "</td></tr>";
                   print "  <tr><td>🔄 <strong>Pull Requests</strong></td><td>" prs "</td></tr>";
-                  # print "  <tr><td>📆 <strong>Commits (This Year)</strong></td><td>" commits_this_year "</td></tr>";
-                  # print "  <tr><td>📆 <strong>Commits (Last Year)</strong></td><td>" commits_last_year "</td></tr>";
                   print "</table>";
                   print "";
-                  # print "<h3>🚀 Most Starred Repositories</h3>";
-                  # print "<ul>";
-                  # split(top_repos, repos, "\n");
-                  # for (i in repos) print "  <li>" repos[i] "</li>";
-                  # print "</ul>";
                   print "<hr/>";
                   print_mode=0;
                   next;
             }
             /<!-- GITHUB STATS END -->/ { print_mode=1 }
             print_mode' README.md > "$TEMP_FILE"
-              
-            #/<!-- GITHUB STATS START -->/ { 
-            #      print;
-            #      print "📊 **GitHub Statistics:**\n";
-            #      print "- 🌟 **Total Stars:** " stars;
-            #      print "- 🍴 **Total Forks:** " forks;
-            #      print "- 👀 **Total Watchers:** " watchers;
-            #      print "- ❗ **Total Open Issues (Across Repos):** " repo_issues;
-            #      print "- 📝 **Total Issues reported:** " issues;
-            #      print "- 🔄 **Total Pull Requests:** " prs;
-            #      #print "- 📆 **Total Commits (This Year):** " commits_this_year;
-            #      #print "- 📆 **Total Commits (Last Year):** " commits_last_year "\n";
-            #      #print "🚀 **Most Starred Repositories:**\n" top_repos;
-            #      print_mode=0;
-            #      next;
-            #  }
-            #  /<!-- GITHUB STATS END -->/ { print_mode=1 }
-            #  print_mode' README.md > "$TEMP_FILE"
 
           # Move the updated file back
           mv "$TEMP_FILE" README.md
@@ -139,16 +125,15 @@ jobs:
         env:
           PAT_TOKEN: ${{ secrets.STARS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
-          
+
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git remote remove origin
           git remote add origin https://${USERNAME}:${PAT_TOKEN}@github.com/${{ github.repository }}.git
-           
+
           # Only add README.md (avoid workflow files)
           git add README.md
           # Commit if there are changes
           git diff --cached --quiet || git commit -m "Updated GitHub stats"
           git push origin main --force
-
