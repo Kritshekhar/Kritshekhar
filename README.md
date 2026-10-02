@@ -72,8 +72,8 @@ Diff          30 mins               -------------------------   00.06 %
   <tr><td>🍴 <strong>Total Forks</strong></td><td>28</td></tr>
   <tr><td>👀 <strong>Total Watchers</strong></td><td>146</td></tr>
   <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>5</td></tr>
-  <tr><td>📝 <strong>Issues Reported</strong></td><td>37</td></tr>
-  <tr><td>🔄 <strong>Pull Requests</strong></td><td>34</td></tr>
+  <tr><td>📝 <strong>Issues Reported</strong></td><td>40</td></tr>
+  <tr><td>🔄 <strong>Pull Requests</strong></td><td>37</td></tr>
 </table>
 
 <hr/>
