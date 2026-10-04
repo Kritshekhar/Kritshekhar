@@ -72,8 +72,8 @@ conf          38 mins               -------------------------   00.07 %
   <tr><td>🍴 <strong>Total Forks</strong></td><td>28</td></tr>
   <tr><td>👀 <strong>Total Watchers</strong></td><td>146</td></tr>
   <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>4</td></tr>
-  <tr><td>📝 <strong>Issues Reported</strong></td><td>48</td></tr>
-  <tr><td>🔄 <strong>Pull Requests</strong></td><td>45</td></tr>
+  <tr><td>📝 <strong>Issues Reported</strong></td><td>49</td></tr>
+  <tr><td>🔄 <strong>Pull Requests</strong></td><td>46</td></tr>
 </table>
 
 <hr/>
