@@ -73,7 +73,7 @@ INI           1 hr 18 mins          -------------------------   00.14 %
   <tr><td>👀 <strong>Total Watchers</strong></td><td>141</td></tr>
   <tr><td>❗ <strong>Open Issues (All Repos)</strong></td><td>4</td></tr>
   <tr><td>📝 <strong>Issues Reported</strong></td><td>49</td></tr>
-  <tr><td>🔄 <strong>Pull Requests</strong></td><td>115</td></tr>
+  <tr><td>🔄 <strong>Pull Requests</strong></td><td>123</td></tr>
 </table>
 
 <hr/>
